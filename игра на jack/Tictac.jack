@@ -1,0 +1,68 @@
+class Tictac {
+    field Array game;
+    static string curPlayer;
+    field boolean gameOver;
+
+    constructor Tictac new(){
+        var int i;
+        let curPlayer = "X";
+        let game = Array.new(9);
+        let i = 0;
+        while (i < 9){
+            let game[i] = " ";
+            let i = i + 1;
+        }
+        let gameOver = false;
+        return this;
+    }
+
+    method boolean CheckRows () {
+        var int i;
+        let i = 0;
+        while (i < 9){
+            if (game[i] = game[i+1] & game[i+1] = game[i+2]){
+                return true;
+            }
+            let i = i + 3;
+        }
+        return false;
+    }
+
+    method boolean CheckColumns () {
+        var int i;
+        let i = 0;
+        while (i < 3){
+            if (game[i] = game[i+3] & game[i+3] = game[i+6]){
+                return true;
+            }
+            let i = i + 1;
+        }
+        return false;
+    }
+
+    method boolean CheckDiag () {
+        if ((game[0] = game[4] & game[4] = game[8]) | (game[2] = game[4] & game[4] = game[6])){
+            return true;
+        }
+        return false;
+    }
+
+    method boolean ChekWin(){
+        return CheckColumns() | CheckDiag() | CheckRows();
+    }
+
+    method void ChangePlayer(){
+        if (curPlayer = "X"){
+            let curPlayer = "O";
+        }
+        else{
+            let curPlayer = "X";
+        }
+        return;
+    }
+
+    method void dispose(){
+        do Memory.deAlloc(this);
+        return;
+    }
+}

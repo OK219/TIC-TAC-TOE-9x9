@@ -1,0 +1,14 @@
+class Main{
+    function void main () {
+        var Array game;
+        var boolean gameOver;
+        var int i;
+        let game = Array.new(9);
+        let i = 0;
+        while (i < 9){
+            let game[i] = Tictac.new();
+            let i = i + 1;
+        }
+        return;
+    }
+}
