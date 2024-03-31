@@ -38,23 +38,6 @@ class Point {
         do Screen.drawRectangle(x, y, x + size, y + size);
         return;
     }
-
-    method void incSize() {
-        if (((y + size) < 254) & ((x + size) < 510)) {
-            do erasePointer();
-            let size = size + 2;
-            do drawPointer();
-        }
-        return;
-    }
-
-    method void decSize() {
-        if (size > 2) {
-            do erasePointer();
-            let size = size - 2;
-            do drawPointer();
-        }
-        return;
   }
 
     method void moveUp() {
