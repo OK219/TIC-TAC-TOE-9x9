@@ -1,0 +1,76 @@
+ 
+class DrawerField{
+
+    field bool End;
+    field int lineCheck;
+    field int lineX;
+    field int xShift;
+    field int yShift;
+
+    constuctor DrawerField new(Array f1, Array f2, Array f3, Array f4, Array f5, Array f6, Array f7, Array f8, Array f9, Array ResultField){
+        do drawField(f1, f2, f3, f4, f5, f6, f7, f8, f9);
+        do drawResult(ResultField);
+        let End = false;
+    }
+
+    method void drawField(Array f1, Array f2, Array f3, Array f4, Array f5, Array f6, Array f7, Array f8, Array f9){
+        do DrawContent(f1,f2,f3,f4,f5,f6,f7,f8,f9);
+        do drawNet();
+    }
+    //Draws net (lines of game) *toFinish with small nets
+    method void drawNet(){
+        if (~(End)){
+        Screen.setColor(true);
+        Screen.drawRectangle(70, 0, 72, 210);
+        Screen.drawRectangle(140, 0, 142, 210);
+        Screen.drawRectangle(0, 70, 210, 72);
+        Screen.drawRectangle(0, 140, 210, 142);
+        }
+    }
+    //Draws Arrays one by one
+    method void drawContent(Array f1, Array f2, Array f3, Array f4, Array f5, Array f6, Array f7, Array f8, Array f9){
+        //Draws f1
+        let lineCheck = 0;
+        let lineX = 0;
+        while ((3*lineCheck) + ){
+            if (lineX < 3){
+                let lineX = lineX + 1;
+                let xShift = xShift + 10;
+                if (f1.peek((3*lineCheck + lineX) = "X")){
+                    drawX(xShift, yShift);
+                }
+                if (f1.peek((3*lineCheck + lineX) = "O")){
+                    drawO(xShift, yShift);
+                }
+            }
+            else{
+                let lineX = 0;
+                let lineCheck = lineCheck + 1;
+                let yShift = yShift + 10;
+                if (f1.peek((3*lineCheck + lineX) = "X")){
+                    drawX(xShift, yShift);
+                }
+                if (f1.peek((3*lineCheck + lineX) = "O")){
+                    drawO(xShift, yShift);
+                }
+            }
+        }
+        //Finishes drawing f1
+    }
+    //Draws Circle
+    method void drawX(int x, int y){
+        Screen.setColor(true);
+        Screen.drawRectangle(x, y, x+3, y+3);
+        Screen.drawRectangle(x+3, y+3, x+6, y+6);
+        Screen.drawRectangle(x+6, y+6, x+9, y+9);
+        Screen.drawRectangle(x, y+6, x+3, y+9);
+        Screen.drawRectangle(x+3, y, x+6, y+3);
+    }
+    //Draws X
+    method void drawO(int x, int y){
+        Screen.setColor(true);
+        Screen.drawRectangle(x, y, x+9, y+9);
+        Screen.setColor(false);
+        Screen.drawRectangle(x+3, y+3, x+6, y+6);
+    }
+}
