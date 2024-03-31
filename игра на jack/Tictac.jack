@@ -1,26 +1,33 @@
 class Tictac {
-    field Array game;
+    field Array game; //массив массивов из партий
     static string curPlayer;
-    field boolean gameOver;
+    field string winner;
+    field Array mainGame; //всевышняя партия
 
     constructor Tictac new(){
         var int i;
         let curPlayer = "X";
         let game = Array.new(9);
+        let mainGame = Array.new(9);
+        let mainGame[[0,0]] = "";
         let i = 0;
         while (i < 9){
-            let game[i] = " ";
+                let i = i + 1;
+                let mainGame[i] = " "; 
+            }
+        while (i < 9){
+            let game[i] = mainGame; //нельзя обращаться напрямую, поэтому как-то так
             let i = i + 1;
         }
-        let gameOver = false;
+        let winner = " ";
         return this;
     }
 
-    method boolean CheckRows () {
+    method boolean CheckRows (Array cell) {
         var int i;
         let i = 0;
         while (i < 9){
-            if (game[i] = game[i+1] & game[i+1] = game[i+2]){
+            if (cell[i] = cell[i+1] & cell[i+1] = cell[i+2]){
                 return true;
             }
             let i = i + 3;
@@ -28,11 +35,11 @@ class Tictac {
         return false;
     }
 
-    method boolean CheckColumns () {
+    method boolean CheckColumns (Array cell) {
         var int i;
         let i = 0;
         while (i < 3){
-            if (game[i] = game[i+3] & game[i+3] = game[i+6]){
+            if (cell[i] = cell[i+3] & cell[i+3] = cell[i+6]){
                 return true;
             }
             let i = i + 1;
@@ -40,15 +47,15 @@ class Tictac {
         return false;
     }
 
-    method boolean CheckDiag () {
-        if ((game[0] = game[4] & game[4] = game[8]) | (game[2] = game[4] & game[4] = game[6])){
+    method boolean CheckDiag (Array cell) {
+        if ((cell[0] = cell[4] & cell[4] = cell[8]) | (cell[2] = cell[4] & cell[4] = cell[6])){
             return true;
         }
         return false;
     }
 
-    method boolean ChekWin(){
-        return CheckColumns() | CheckDiag() | CheckRows();
+    method boolean ChekWin(Array cell){
+        return CheckColumns(cell) | CheckDiag(cell) | CheckRows(cell);
     }
 
     method void ChangePlayer(){
@@ -58,6 +65,33 @@ class Tictac {
         else{
             let curPlayer = "X";
         }
+        return;
+    }
+
+    method void checkEndGame(){
+        var int i;
+        let i = 0;
+        while (i < 9){
+            if (ChekWin(game[i])){
+                let mainGame[i] = curPlayer;
+                if (ChekWin(mainGame)){
+                    let winner = curPlayer;
+                    return;
+                }
+            }
+        }
+        return;
+    }
+
+    method string GetWinner(){
+        return winner;
+    }
+
+    method void MakeTurn(int cell, int position){
+        var Array arr; //вспомогательный массив по той же причине, что сверху
+        let arr = game[cell];
+        let arr[position] = curPlayer;
+        let game[cell] = arr;
         return;
     }
 
