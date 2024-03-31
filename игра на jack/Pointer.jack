@@ -84,6 +84,9 @@ class Pointer {
                 let xPos = updateX();
                 let yPos = updateY();
                 let posNumber = yPos*3 + xPos;
+                do Output.printInt(posNumber);
+                do Output.printString(" ");
+                do Output.printInt(fieldNumber);
                 do game.MakeTurn(fieldNumber, posNumber);
                 /*
                 if (game.CheckWin(fieldNumber)){
@@ -107,9 +110,7 @@ class Pointer {
     method int updateX(){
         var int currentPosX;
         let currentPosX = (MainPointer.GetX() - ((MainPointer.GetX() / 81) * 81)) / 27;
-        do Output.printInt(currentPosX);
         do Sys.wait(1000);
-        do Output.printString(" ");
         return currentPosX;
     }
 
@@ -124,8 +125,8 @@ class Pointer {
     // Returns number of field we are in
     method int GetField(){
         var int fieldNum;
-        let fieldNum = (MainPointer.GetY() - ((MainPointer.GetY() / 81) * 81))*3 + (MainPointer.GetX() - ((MainPointer.GetX() / 81) * 81));
-
+        //let fieldNum = (MainPointer.GetY() - ((MainPointer.GetY() / 81) * 81))*3 + (MainPointer.GetX() - ((MainPointer.GetX() / 81) * 81));
+        let fieldNum = MainPointer.GetY() / 81 * 3 + (MainPointer.GetX() / 81);
         return fieldNum;
     }
     

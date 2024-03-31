@@ -17,6 +17,7 @@ class Tictac {
                 let mainGame[i] = " "; 
                 let i = i + 1;
             }
+        let i = 0;
         while (i < 9){
             let game[i] = CopyArray(mainGame); //нельзя обращаться напрямую, поэтому как-то так
             let i = i + 1;
