@@ -4,7 +4,6 @@
 class Point {
 
     field int x, y;
-
     field int size;
 
     constructor Point new(int Ax, int Ay, int Asize) {
@@ -38,41 +37,46 @@ class Point {
         do Screen.drawRectangle(x, y, x + size, y + size);
         return;
     }
-  }
 
     method void moveUp() {
         if (y > 2) {
             do erasePointer();
-            let y = y - 2;
+            let y = y - 27;
             do drawPointer();
         }
         return;
     }
 
     method void moveDown() {
-        if ((y + size) < 254) {
+        if ((y + size + 27) < 243) {
             do erasePointer();
-            let y = y + 2;
+            let y = y + 27;
             do drawPointer();
         }
         return;
     }
 
     method void moveLeft() {
-        if (x > 2) {
+        if (x > 0) {
             do erasePointer();
-            let x = x - 2;
+            let x = x - 27;
             do drawPointer();
         }
         return;
     }
 
     method void moveRight() {
-        if ((x + size) < 510) {
+        if ((x + size + 27) < 243) {
             do erasePointer();
-            let x = x + 2;
+            let x = x + 27;
             do drawPointer();
         }
         return;
+    }
+    method int GetX(){
+        return x;
+    }
+    method int GetY(){
+        return y;
     }
 }

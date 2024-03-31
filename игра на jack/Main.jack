@@ -3,7 +3,6 @@ class Main{
         var Pointer pointer;
         let pointer = Pointer.new();
         do pointer.run();
-        
         do pointer.dispose();
         return;
     }
