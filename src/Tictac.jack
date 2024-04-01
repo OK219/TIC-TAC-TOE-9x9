@@ -1,30 +1,35 @@
-//cd C:\Users\Fridmak\n2t-software-suite
-//JackCompiler.bat "C:\Users\Fridmak\Desktop\TIC-TAC-TOE-9x9\игра на jack"
 class Tictac {
     field Array game; //массив массивов из партий 
-    static string curPlayer;
-    field string winner;
+    static int curPlayer; // 0 - никто , 1 - X, 2- Y
+    field int winner;
     field Array mainGame; //всевышняя партия
 
     //IDK
     constructor Tictac new(){
         var int i;
-        let curPlayer = "X";
+        let curPlayer = 1;
         let game = Array.new(9);
         let mainGame = Array.new(9);
         let i = 0;
         while (i < 9){
-                let mainGame[i] = " "; 
+                let mainGame[i] = 0; 
                 let i = i + 1;
             }
         let i = 0;
         while (i < 9){
-            let game[i] = CopyArray(mainGame); //нельзя обращаться напрямую, поэтому как-то так
+            let game[i] = CopyArray(mainGame); 
             let i = i + 1;
         }
-
-        let winner = " ";
+        let winner = 0;
         return this;
+    }
+
+    method Array GetGame(){
+        return game;
+    }
+
+    method Array GetMainGame(){
+        return mainGame;
     }
 
     //DONE
@@ -32,7 +37,8 @@ class Tictac {
         var int i;
         let i = 0;
         while (i < 9){
-            if (cell[i] = cell[i+1] & cell[i+1] = cell[i+2]){
+            if ((cell[i] = cell[i+1]) & (cell[i+1] = cell[i+2]) & (~(cell[i] = 0))){
+                do Output.printString("HELLL");
                 return true;
             }
             let i = i + 3;
@@ -45,9 +51,7 @@ class Tictac {
         var int i;
         let i = 0;
         while (i < 3){
-            do Output.moveCursor(40,40);
-            do Output.printInt(i);
-            if (cell[i] = cell[i+3] & cell[i+3] = cell[i+6]){
+            if ((cell[i] = cell[i+3]) & (cell[i+3] = cell[i+6])  & (~(cell[i] = 0))){
                 return true;
             }
             let i = i + 1;
@@ -57,7 +61,7 @@ class Tictac {
 
     //DONE
     method boolean CheckDiag (Array cell) {
-        if ((cell[0] = cell[4] & cell[4] = cell[8]) | (cell[2] = cell[4] & cell[4] = cell[6])){
+        if ((((cell[0] = cell[4]) & (cell[4] = cell[8]) & (~(cell[0] = 0))) | ((cell[2] = cell[4]) & (cell[4] = cell[6]) & (~(cell[2] = 0))))){
             return true;
         }
         return false;
@@ -66,36 +70,36 @@ class Tictac {
     //DONE
     method boolean CheckWin(int j){
         return  CheckColumns(game[j]) | CheckDiag(game[j]) | CheckRows(game[j]);
-        //return false;
     }
 
     //DONE
     method void ChangePlayer(){
-        if (curPlayer = "X"){
-            let curPlayer = "O";
+        if (curPlayer = 1){
+            let curPlayer = 2;
         }
         else{
-            let curPlayer = "X";
+            let curPlayer = 1;
         }
         return;
     }
 
     //DONE
-    method void checkEndGame(){
+    method boolean checkEndGame(){
         var int i;
         let i = 0;
         while (i < 9){
             if (CheckWin(i)){
-                if (mainGame[i] = " "){
+                if (mainGame[i] = 0){
                     let mainGame[i] = curPlayer;
                 }
-                if (CheckWin(mainGame)){
+                if (CheckColumns(mainGame) | CheckDiag(mainGame) | CheckRows(mainGame)){
                     let winner = curPlayer;
-                    return;
+                    return true;
                 }
             }
+            let i = i + 1;
         }
-        return;
+        return false;
     }
 
     //DONE
@@ -103,15 +107,22 @@ class Tictac {
         return winner;
     }
 
-    //DONE
-    method void MakeTurn(int cell, int position){ //cell - номер поля среди 9, position - позиция в нём
+    //IDK
+    method void MakeTurn(int cell, int position){ 
         var Array arr; 
         let arr = game[cell];
-        if (arr[position] = " "){
-            let arr[position] = curPlayer;
-        }
-        let game[cell] = arr;
+        let arr[position] = curPlayer; 
+
         return;
+    }
+
+    method bool CanPlaceHere(int cell, int position){
+        var Array arr; 
+        let arr = game[cell];
+        if (arr[position] = 0){
+            return true;
+        }
+        return false;
     }
 
     //DONE
@@ -120,10 +131,10 @@ class Tictac {
         return;
     }
 
-    //IDK
+    //DONE
     method Array CopyArray(Array mainArray){
     var int i;
-    var char value;
+    var int value;
     var Array copiedArray;
     let copiedArray = Array.new(9);
       
@@ -134,5 +145,9 @@ class Tictac {
         let i = i + 1;
     }
     return copiedArray;
+    }
+
+    method int getCurPlayer(){
+        return curPlayer;
     }
 }

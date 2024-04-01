@@ -1,16 +1,20 @@
 function Pointer.new 0
-push constant 8
+push constant 11
 call Memory.alloc 1
 pop pointer 0
 push constant 0
 push constant 0
-push constant 10
+push constant 23
 call Point.new 3
 pop this 0
 push constant 0
 pop this 1
 call Tictac.new 0
 pop this 3
+call Animations.new 0
+pop this 8
+push constant 0
+pop this 9
 push pointer 0
 return
 function Pointer.dispose 0
@@ -24,16 +28,38 @@ call Memory.deAlloc 1
 pop temp 0
 push constant 0
 return
-function Pointer.run 2
+function Pointer.run 0
 push argument 0
 pop pointer 0
-push constant 0
-pop local 0
 label WHILE_EXP0
-push local 0
+push this 9
 not
 not
 if-goto WHILE_END0
+push this 8
+push constant 300
+push constant 15
+push this 3
+call Tictac.getCurPlayer 1
+call Animations.PrintCurrentPlayer 4
+pop temp 0
+push this 8
+push this 3
+call Tictac.GetGame 1
+call Animations.drawField 2
+pop temp 0
+push this 3
+call Tictac.checkEndGame 1
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 3
+call Tictac.GetWinner 1
+pop this 10
+push constant 0
+not
+pop this 9
+label IF_FALSE0
 label WHILE_EXP1
 push this 2
 push constant 0
@@ -55,6 +81,16 @@ call Keyboard.keyPressed 0
 pop this 2
 push pointer 0
 call Pointer.movePointer 1
+pop temp 0
+push this 8
+push this 3
+call Tictac.GetGame 1
+call Animations.drawField 2
+pop temp 0
+push this 8
+push this 3
+call Tictac.GetMainGame 1
+call Animations.DrawMainField 2
 pop temp 0
 goto WHILE_EXP2
 label WHILE_END2
@@ -117,9 +153,12 @@ push constant 244
 lt
 push this 0
 call Point.GetY 1
-and
 push constant 244
 lt
+and
+push this 0
+call Point.CanPlace 1
+and
 if-goto IF_TRUE5
 goto IF_FALSE5
 label IF_TRUE5
@@ -138,26 +177,59 @@ call Math.multiply 2
 push this 5
 add
 pop this 7
-push this 7
-call Output.printInt 1
-pop temp 0
-push constant 1
-call String.new 1
-push constant 32
-call String.appendChar 2
-call Output.printString 1
-pop temp 0
+push this 3
 push this 4
-call Output.printInt 1
+push this 7
+call Tictac.CanPlaceHere 3
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push this 0
+call Point.Refresh 1
 pop temp 0
 push this 3
 push this 4
 push this 7
 call Tictac.MakeTurn 3
 pop temp 0
+push this 0
+push this 5
+push constant 81
+call Math.multiply 2
+push this 6
+push constant 81
+call Math.multiply 2
+call Point.Place 3
+pop temp 0
+push this 3
+call Tictac.checkEndGame 1
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push this 3
+call Tictac.GetWinner 1
+pop this 10
+push constant 0
+not
+pop this 9
+label IF_FALSE7
+push this 3
+call Tictac.ChangePlayer 1
+pop temp 0
+label IF_FALSE6
 label IF_FALSE5
 label IF_FALSE4
-push constant 200
+push this 2
+push constant 82
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push this 0
+call Point.GoToNewSystem 1
+pop temp 0
+label IF_FALSE8
+push constant 110
 call Sys.wait 1
 pop temp 0
 push constant 0

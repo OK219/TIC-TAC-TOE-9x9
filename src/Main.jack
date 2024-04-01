@@ -2,6 +2,7 @@ class Main{
     function void main () {
         var Pointer pointer;
         let pointer = Pointer.new();
+        do Output.moveCursor(0, 38);
         do pointer.run();
         do pointer.dispose();
         return;

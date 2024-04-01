@@ -1,0 +1,190 @@
+class Point {
+    field int x, y;
+    field int size;
+    field int result;
+    field int prevXPos;
+    field int prevYPos;
+    field int xOverCome;
+    field int yOverCome;
+    field int toRemoveCanPlace;
+    field Animations animation;
+
+    constructor Point new(int Ax, int Ay, int Asize) {
+        let x = Ax;
+        let y = Ay;
+        let size = Asize;
+        let result = 0;
+        let prevXPos = 0;
+        let prevYPos = 0;
+        let xOverCome = 100;
+        let yOverCome = 100;
+        let animation = Animations.new();
+
+        do drawPointer();
+
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void drawPointer() {
+        do animation.drawSquare(x+2, y, size, true);
+        if (CanPlace() & (result = 0)){
+            do animation.drawSquareSelected(x+2, y, size, true);
+            let toRemoveCanPlace = 1;
+        }
+        return;
+    }
+
+    method void erasePointer() {
+        do animation.drawSquare(x+2, y, size, false);
+        if (toRemoveCanPlace = 1){
+            if (~(CanPlace())){let toRemoveCanPlace = 0;}
+            do animation.drawSquareSelected(x+2, y, size, false);
+        }
+        return;
+    }
+
+    method void moveUp() {
+        var int koef;
+        let koef = 27;
+        if (result = 1){let koef = 54;}
+
+        if (result = 1){
+            if (y > 61) {
+                do erasePointer();
+                let y = y - koef;
+                do drawPointer();
+            }
+        }
+        else{
+            if (y > 26){
+                do erasePointer();
+                let y = y - koef;
+                let yOverCome = yOverCome - 1;
+                do drawPointer();
+            }
+        }
+        return;
+    }
+
+    method void moveDown() {
+        var int koef;
+        let koef = 27;
+        if (result = 1){let koef = 54;}
+
+        if (result = 1){
+            if (y < 168) {
+                do erasePointer();
+                let y = y + koef;
+                do drawPointer();
+            }
+        }
+        else{
+            if (y < 216){
+                do erasePointer();
+                let y = y + koef;
+                let yOverCome = yOverCome + 1;
+                do drawPointer();
+            }
+        }
+        return;
+    }
+
+    method void moveLeft() {
+        var int koef;
+        let koef = 27;
+        if (result = 1){let koef = 54;}
+
+        if (result = 1){
+            if (x > 300){
+                do erasePointer();
+                let x = x - koef;
+                do drawPointer();
+
+            }
+        }
+        else{
+            if (x > 0){
+                do erasePointer();
+                let x = x - koef;
+                let xOverCome = xOverCome - 1;
+                do drawPointer();
+            }
+        }
+        return;
+    }
+
+    method void moveRight() {
+        var int koef;
+        let koef = 27;
+        if (result = 1){let koef = 54;}
+
+        if (result = 1){
+            if (x < 408) {
+                do erasePointer();
+                let x = x + koef;
+                do drawPointer();
+            }
+        } 
+        else{
+            if (x < 216){
+                do erasePointer();
+                let x = x + koef;
+                let xOverCome = xOverCome + 1;
+                do drawPointer();
+            }
+        }
+        return;
+    }
+
+
+    method void GoToNewSystem(){
+        do erasePointer();
+        if (result = 0){
+            let prevXPos = x;
+            let prevYPos = y;
+            let x = 300;
+            let y = 60;
+            let result = 1;
+            let size = 50;
+            do drawPointer();
+        }
+        else {
+            let x = prevXPos;
+            let y = prevYPos;
+            let size = 25;
+            let result = 0;
+            do drawPointer();
+        }
+        return;
+    }
+    method int GetX(){
+        return x;
+    }
+    method int GetY(){
+        return y;
+    }
+    method void Place(int i, int j){
+        do erasePointer();
+        let x = i;
+        let y = j;
+        do drawPointer();
+        return;
+    }
+
+    method bool CanPlace(){
+        if (((xOverCome > 50) & (yOverCome > 50)) | ((xOverCome > -1) & (xOverCome < 3) & (yOverCome > -1) & (yOverCome < 3))){
+            return true;
+        }
+        return false;
+    } 
+    method void Refresh(){
+        let xOverCome = 0;
+        let yOverCome = 0;
+        return;
+    }
+}

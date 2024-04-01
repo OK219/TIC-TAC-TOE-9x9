@@ -1,0 +1,151 @@
+class Animations{
+    field bool made;
+
+    constructor Animations new(){
+        let made = true;
+
+        return this;
+    }
+
+    method void drawSquare(int x, int y, int size, bool pen){
+        do Screen.setColor(pen);
+        do Screen.drawRectangle(x, y, x + size, y + (size / 8));
+        do Screen.drawRectangle(x, y, x + (size / 8), y + size);
+        do Screen.drawRectangle(x, y + (7 * size / 8), x + size, y + size);
+        do Screen.drawRectangle(x + (7 * size / 8), y, x + size, y + size);
+        
+        return;
+    }
+
+    method void drawSquareSelected(int x, int y, int size, bool pen){
+        do Screen.setColor(pen);
+        do Screen.drawRectangle(x + (size / 8), y + (9 * size / 20) , x + (size / 4), y + (11 * size / 20));
+        do Screen.drawRectangle(x + (7 * size / 8) - (3 * size / 16), y + (9 * size / 20) , x + (7 * size / 8), y + (11 * size / 20));
+        return;
+    }
+
+    method void drawField(Tictac game){
+        var int koef;
+        var int x;
+        var int y;
+        var int currentPlayerPosX;
+        var int currentPlayerPosY;
+        var Array helpArr;
+
+        let koef = 1;
+
+         //gameField
+        do Screen.setColor(true);
+        while (koef < 10){
+            if ((koef = 3) | (koef = 6) | (koef = 9)){
+                do Screen.drawRectangle(0,(koef*27-1),243, (koef*27)+1);
+                do Screen.drawRectangle((koef*27-1),0,(koef*27)+1, 243);
+            }
+            else{
+                do Screen.drawRectangle(0,koef*27,243,koef*27);
+                do Screen.drawRectangle(koef*27,0,koef*27, 243);
+            }
+            let koef = koef + 1;
+        }
+
+        //mainField
+        let koef = 1;
+        while (koef < 3){
+            do Screen.drawRectangle(300, 58 + (koef*54), 462, 58 + (koef*54));
+            do Screen.drawRectangle(298 + (koef*54), 60 ,298 + (koef*54), 222);
+            let koef = koef + 1;
+        }
+
+        //Placed
+        let x = 0;
+        let y = 0;
+        while (x < 9){
+            let helpArr = game[x];
+            let currentPlayerPosX = (x - ((x/3)*3))*81;
+            let currentPlayerPosY = (x/3)*81;
+            while (y < 9){
+                if (helpArr[y] = 1){
+                    do DrawX(currentPlayerPosX + ((y - ((y/3)*3))*27), currentPlayerPosY + ((y/3)*27), 24); //TOCHECK
+                }
+                else{
+                    if (helpArr[y] = 2){
+                        do DrawY(currentPlayerPosX + ((y - ((y/3)*3))*27), currentPlayerPosY + ((y/3)*27), 24); //TOCHECK
+                    }
+                }
+                let y = y + 1;
+            }
+            let y = 0;
+            let x = x + 1;
+        }
+
+        return;
+    }
+
+    method void DrawMainField(Array mainArray){
+        var int y;
+        let y = 0;
+
+        while (y < 9){
+            if (mainArray[y] = 1){
+                    do DrawX(300 + ((y - ((y/3)*3))*54), 60 + ((y/3)*54), 50);
+                }
+                else{
+                    if (mainArray[y] = 2){
+                        do DrawY(300 + ((y - ((y/3)*3))*54), 60 + ((y/3)*54), 50); 
+                    }
+                }
+            let y = y + 1;
+        }
+
+        return;
+    }
+
+    method void DrawX(int x, int y, int size){
+        var int ind;
+        let ind = 0;
+        while (ind < size){
+            do Screen.drawRectangle(x + ind, y + ind, x + ind + 1, y + ind + (size/8));
+            do Screen.drawRectangle(x + size - ind - 1, y + ind, x + size - ind + 1, y + ind + (size/8));
+            let ind = ind + 1;
+        }
+
+        return;
+    }
+
+    method void DrawY(int x, int y, int size){
+        var int ind;
+        let ind = 0;
+        while (ind < size){
+            if (ind < (size/2)){
+            do Screen.drawRectangle(x + ind, y + ind, x + ind + 1, y + ind + (size/8));
+            }
+            do Screen.drawRectangle(x + size - ind - 1, y + ind, x + size - ind + 1, y + ind + (size/8));
+            let ind = ind + 1;
+        }
+
+        return;
+    }
+
+    method void PrintCurrentPlayer(int x, int y,int player){
+        if (player = 1){
+            do Output.moveCursor(0, 38);
+            do Output.printString("Current Player:");
+            do ErasePlayer(x, y, 42);
+            do DrawX(x, y, 35);
+        }
+        else{
+            do Output.moveCursor(0, 38);
+            do Output.printString("Current Player:");
+            do ErasePlayer(x, y, 42);
+            do DrawY(x, y, 35);
+        }
+        return;
+    }
+
+    method void ErasePlayer(int x, int y, int size){
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x, y, x+size, y+size);
+        do Screen.setColor(true);
+        return;
+    }
+}
