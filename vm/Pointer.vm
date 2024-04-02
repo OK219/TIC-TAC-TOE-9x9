@@ -84,11 +84,6 @@ call Pointer.movePointer 1
 pop temp 0
 push this 8
 push this 3
-call Tictac.GetGame 1
-call Animations.drawField 2
-pop temp 0
-push this 8
-push this 3
 call Tictac.GetMainGame 1
 call Animations.DrawMainField 2
 pop temp 0

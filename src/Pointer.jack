@@ -49,7 +49,7 @@ class Pointer {
             while (~(key = 0)) {
                 let key = Keyboard.keyPressed();
                 do movePointer();
-                do animation.drawField(game.GetGame());
+                //do animation.drawField(game.GetGame());
                 do animation.DrawMainField(game.GetMainGame());
             }
         }
