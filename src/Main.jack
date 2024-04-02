@@ -1,10 +1,19 @@
 class Main{
     function void main () {
         var Pointer pointer;
+        var waiting waitor;
+
+        let waitor = waiting.new();
+        do waitor.wait(1);
+        do Sys.wait(100);
+
         let pointer = Pointer.new();
         do Output.moveCursor(0, 38);
         do pointer.run();
+
         do pointer.dispose();
+        let waitor = waiting.new();
+        do waitor.wait(0);
         return;
     }
 }

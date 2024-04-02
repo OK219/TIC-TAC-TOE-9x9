@@ -87,11 +87,11 @@ class Animations{
 
         while (y < 9){
             if (mainArray[y] = 1){
-                    do DrawX(300 + ((y - ((y/3)*3))*54), 60 + ((y/3)*54), 50);
+                    do DrawX(300 + ((y - ((y/3)*3))*54), 60 + ((y/3)*54), 50); //TOCHECK
                 }
                 else{
                     if (mainArray[y] = 2){
-                        do DrawY(300 + ((y - ((y/3)*3))*54), 60 + ((y/3)*54), 50); 
+                        do DrawY(300 + ((y - ((y/3)*3))*54), 60 + ((y/3)*54), 50); //TOCHECK
                     }
                 }
             let y = y + 1;
@@ -113,15 +113,10 @@ class Animations{
     }
 
     method void DrawY(int x, int y, int size){
-        var int ind;
-        let ind = 0;
-        while (ind < size){
-            if (ind < (size/2)){
-            do Screen.drawRectangle(x + ind, y + ind, x + ind + 1, y + ind + (size/8));
-            }
-            do Screen.drawRectangle(x + size - ind - 1, y + ind, x + size - ind + 1, y + ind + (size/8));
-            let ind = ind + 1;
-        }
+        do Screen.drawCircle(x + (size/2), y + (size/2), (size/2));
+        do Screen.setColor(false);
+        do Screen.drawCircle(x + (size/2), y + (size/2), (6*size)/16);
+        do Screen.setColor(true);
 
         return;
     }
@@ -146,6 +141,31 @@ class Animations{
         do Screen.setColor(false);
         do Screen.drawRectangle(x, y, x+size, y+size);
         do Screen.setColor(true);
+        return;
+    }
+
+    method void EraseScreen(){
+        do Screen.setColor(false);
+        do Screen.drawRectangle(0,0,500,250);
+        do Screen.setColor(true);
+        return;
+    }
+
+    method void DrawStart(){
+        do EraseScreen();
+        do Output.moveCursor(1, 1);
+        do Output.printString("The Tic-Tac game, made in nand2tetris course with jack language");
+        do Output.moveCursor(3,1);
+        do Output.printString("To start press space");
+        do DrawX(130, 100, 130);
+        do DrawY(230, 100, 150);
+        do DrawY(270, 145, 70);
+        return;
+    }
+
+    method void drawWinner(){
+        do Output.moveCursor(2,50);
+        do Output.printString("<- WINNER");
         return;
     }
 }

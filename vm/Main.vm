@@ -1,4 +1,10 @@
-function Main.main 1
+function Main.main 2
+call waiting.new 0
+pop local 1
+push local 1
+push constant 1
+call waiting.wait 2
+pop temp 0
 call Pointer.new 0
 pop local 0
 push constant 0
@@ -10,6 +16,12 @@ call Pointer.run 1
 pop temp 0
 push local 0
 call Pointer.dispose 1
+pop temp 0
+call waiting.new 0
+pop local 1
+push local 1
+push constant 0
+call waiting.wait 2
 pop temp 0
 push constant 0
 return

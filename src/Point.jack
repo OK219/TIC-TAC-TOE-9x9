@@ -1,3 +1,6 @@
+//cd C:\Users\Fridmak\n2t-software-suite
+//JackCompiler.bat "C:\Users\Fridmak\Desktop\TIC-TAC-TOE-9x9\игра на jack"
+// VMEmulator.bat
 class Point {
     field int x, y;
     field int size;

@@ -1,0 +1,33 @@
+class waiting{
+    field bool exit;
+    field char key;
+    field Animations animation;
+
+    constructor waiting new(){
+        let exit = false;
+        let animation = Animations.new();
+        return this;
+    }
+
+    method void wait(int cond){
+        if (cond = 1){
+            do animation.DrawStart();
+        }
+        while(~(exit)){
+            let key = Keyboard.keyPressed();
+            do checkKey();
+        }
+        if (cond = 1){
+            do animation.EraseScreen();
+        }
+        return;
+    }
+
+    method void checkKey(){
+        if (key = 32){
+            do Output.printString("done");
+            let exit = true;
+        }
+        return;
+    }
+}
